@@ -29,4 +29,23 @@ public class BlogController {
 		model.addAttribute("blogVo", blogVo);
 		return "blog/blog-main";
 	}
+	
+	@RequestMapping(value = "/blog-admin-basic/{userId}", method = RequestMethod.GET)
+	public String adminBasic(
+			@PathVariable("userId") String userId,
+			Model model) {
+		BlogVo blogVo = blogService.get(userId);
+		model.addAttribute("blogVo", blogVo);
+		return "blog/blog-admin-basic";
+	}
+	
+	@RequestMapping(value = "/blog-admin-category", method = RequestMethod.GET)
+	public String adminCategory() {
+		return "blog/blog-admin-category";
+	}
+	
+	@RequestMapping(value = "/blog-admin-write", method = RequestMethod.GET)
+	public String adminWrite() {
+		return "blog/blog-admin-write";
+	}
 }
