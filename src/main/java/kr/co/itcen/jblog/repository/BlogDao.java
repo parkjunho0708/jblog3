@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.itcen.jblog.vo.BlogVo;
+
 @Repository
 public class BlogDao {
 
@@ -21,6 +23,13 @@ public class BlogDao {
 		map.put("blogLogo", blogLogo);
 		
 		sqlSession.insert("blog.createMyBlog", map);
+	}
+
+	// 블로그 아이디(userId = blogId)를 통해 해당 유저의
+	// blogTitle, blogLogo의 값을 가지고 옴.
+	public BlogVo get(String userId) {
+		BlogVo result = sqlSession.selectOne("blog.getByUserId", userId);
+		return result;
 	}
 	
 	

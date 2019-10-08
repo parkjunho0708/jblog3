@@ -8,5 +8,12 @@
 			insert into blog values (#{userId}, #{blogTitle}, #{blogLogo})
 		]]>
 	</insert>
+	
+	<select id="getByUserId" parameterType="string" resultType="blogvo">
+		<![CDATA[
+			select user_id as userId, blog_title as blogTitle, blog_logo as blogLogo 
+			from blog where user_id = #{userId}
+		]]>
+	</select>
 
 </mapper>
