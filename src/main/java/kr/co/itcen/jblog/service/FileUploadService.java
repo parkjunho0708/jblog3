@@ -1,6 +1,5 @@
 package kr.co.itcen.jblog.service;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -29,11 +28,6 @@ public class FileUploadService {
 			// 서버에서 저장 할 파일 이름
 			String saveFileName = getSaveFileName(extName);
 			
-			System.out.println("originFilename : " + originFilename);
-			System.out.println("extensionName : " + extName);
-			System.out.println("size : " + size);
-			System.out.println("saveFileName : " + saveFileName);
-			
 			writeFile(multipartFile, saveFileName);
 			url = PREFIX_URL + saveFileName;
 		}
@@ -45,8 +39,6 @@ public class FileUploadService {
 		}
 		return url;
 	}
-	
-	
 	
 	// 현재 시간을 기준으로 파일 이름 생성
 	private String getSaveFileName(String extName) {
@@ -64,7 +56,6 @@ public class FileUploadService {
 		
 		return fileName;
 	}
-	
 	
 	// 파일을 실제로 write 하는 메서드
 	private boolean writeFile(MultipartFile multipartFile, String saveFileName) throws IOException {

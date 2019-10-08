@@ -17,10 +17,10 @@ import kr.co.itcen.jblog.vo.UserVo;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private BlogService blogService;
 
@@ -29,7 +29,7 @@ public class UserController {
 	public String joinsuccess() {
 		return "user/joinsuccess";
 	}
-	
+
 	// 회원가입 페이지로 이동
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join(@ModelAttribute UserVo vo) {
@@ -39,7 +39,7 @@ public class UserController {
 	// 회원가입을 하고 회원정보 및 회원의 개인블로그 생성
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(
-			@ModelAttribute @Valid UserVo vo,
+			@ModelAttribute @Valid UserVo vo, 
 			BindingResult result, 
 			Model model) {
 		if (result.hasErrors()) {
