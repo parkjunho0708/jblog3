@@ -31,6 +31,10 @@ public class BlogDao {
 		BlogVo result = sqlSession.selectOne("blog.getByUserId", userId);
 		return result;
 	}
+
+	public void blogAdminWrite(BlogVo blogVo) {
+		sqlSession.update("blog.blogAdminWrite", blogVo);
+	}
 	
 	
 

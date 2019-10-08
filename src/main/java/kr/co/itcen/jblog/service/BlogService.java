@@ -22,6 +22,11 @@ public class BlogService {
 	public BlogVo get(String userId) {
 		return blogDao.get(userId);
 	}
+
+	// blog-admin-basic.jsp 에서 정보수정한 데이터 전달
+	public void blogAdminWrite(BlogVo blogVo) {
+		blogDao.blogAdminWrite(blogVo);
+	}
 	
 	
 }

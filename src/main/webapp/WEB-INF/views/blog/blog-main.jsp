@@ -34,7 +34,7 @@
 		</div>
 		<div id="extra">
 			<div class="blog-logo">
-				<img src="${pageContext.request.contextPath}/assets/images/${blogVo.blogLogo}">
+				<img src="${pageContext.request.contextPath}${blogVo.blogLogo}">
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />

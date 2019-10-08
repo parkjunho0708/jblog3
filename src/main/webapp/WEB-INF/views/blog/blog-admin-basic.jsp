@@ -19,21 +19,21 @@
 					<li><a href="${pageContext.servletContext.contextPath}/blog/blog-admin-category">카테고리</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/blog/blog-admin-write">글작성</a></li>
 				</ul>
-				<form action="" method="post">
+				<form action="${pageContext.servletContext.contextPath}/blog/blog-admin-write/${blogVo.userId}" method="post"  enctype="multipart/form-data">
 	 		      	<table class="admin-config">
 	 		      		<tr>
 			      			<td class="t"><h3>${blogVo.userId} 블로그</h3></td>
 			      		</tr>
 			      		<tr>
 			      			<td class="t">블로그 제목</td>
-			      			<td><input type="text" size="40" name="title" value="${blogVo.blogTitle}"></td>
+			      			<td><input type="text" size="40" name="blogTitle" value="${blogVo.blogTitle}"></td>
 			      		</tr>
 			      		<tr>
 			      			<td class="t">로고이미지</td>
-			      			<td><img src="${pageContext.request.contextPath}/assets/images/${blogVo.blogLogo}"></td>      			
+			      			<td><img src="${pageContext.request.contextPath}${blogVo.blogLogo}"></td>      			
 			      		</tr>      		
 			      		<tr>
-			      			<td class="t">&nbsp;</td>
+			      			<td class="t">이미지 파일 업로드</td>
 			      			<td><input type="file" name="logo-file"></td>      			
 			      		</tr>           		
 			      		<tr>
