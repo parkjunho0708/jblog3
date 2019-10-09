@@ -12,22 +12,36 @@
 <script>
 $(function(){
 	$("#btn-category-add").click(function(){
-		var categoryName = $('input[name=categoryName]').val();
-		var categoryDesc = $('input[name=categoryDesc]').val();
-		var userId = $('input[name=userId]').val();
-		if(categoryName == '' || categoryDesc == ''){
+		var categoryVo = {
+				"categoryName" : $('input[name=categoryName]').val(),
+				"categoryDesc" : $('input[name=categoryDesc]').val(),
+				"userId" : $('input[name=userId]').val()
+		};
+		if(categoryVo == ''){
 			alert("카테고리 항목을 모두 입력해주세요.");
 			return;
 		}
 		
 		// ajax 통신
 		$.ajax({
-			url: "${pageContext.servletContext.contextPath}/api/blog/categoryinsert?categoryname=" + categoryName + "&categorydesc=" + categoryDesc + "&userid=" + userId,
+			url: "${pageContext.servletContext.contextPath}/api/blog/categoryinsert",
+			contentType : "application/json; charset=utf-8",
 			type: "post",
 			dataType: "json",
-			data: "",
-			success: function(response){
-				alert("카테고리가 성공적으로 추가되었습니다.");
+			data: JSON.stringify(categoryVo),
+			success: function(data){
+				var jObj = JSON.parse(data);
+				console.log(data);
+				$(".category-tbody").append("<tr>" +
+				        "<td>" + jObj.categoryNo + "</td>" +
+				        "<td>" + jObj.categoryName + "</td>" +
+				        "<td>" + jObj.categoryDesc + "</td>" +
+				        "<td>" + jObj.categoryRegdate + "</td>" +
+				        "<td>" +
+				        "<img src='${pageContext.request.contextPath}/assets/images/delete.jpg'" +
+				        "class='delete-img' value='"+ jObj.categoryNo + "'>" +
+				        "</td>" +
+				        "</tr>");
 			},
 			error: function(xhr, error){
 				console.error("error : " + error);
@@ -49,35 +63,43 @@ $(function(){
 					<li><a href="${pageContext.servletContext.contextPath}/blog/blog-admin-write">글작성</a></li>
 				</ul>
 				
-				<c:forEach items="${list}" var="vo" varStatus="status">
-		      	<table class="admin-cat">
+		      	<table class="admin-category">
+		      		<thead>
 		      		<tr>
 		      			<th>번호</th>
 		      			<th>카테고리명</th>
-		      			<th>포스트 수</th>
 		      			<th>설명</th>
-		      			<th>삭제</th>      			
+		      			<th>날짜</th>
+		      			<th>&nbsp;</th>      			
 		      		</tr>
+		      		</thead>
+		      		
+		      		<tbody class="category-tbody">
+		      		<c:forEach items="${list}" var="vo" varStatus="status">
 					<tr>
 						<td>${vo.categoryNo}</td>
 						<td>${vo.categoryName}</td>
 						<td>${vo.categoryDesc}</td>
 						<td>${vo.categoryRegdate}</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr> 		  
+						<td>
+							<img src="${pageContext.request.contextPath}/assets/images/delete.jpg" value="카테고리번호" class="delete-img">
+						</td>
+					</tr>
+					</c:forEach> 
+					</tbody>
+							  
 				</table>
-				</c:forEach>
       	
       			<h4 class="n-c">새로운 카테고리 추가</h4>
       			<input type="hidden" name="userId" value="${authUser.userId}">
 		      	<table id="admin-cat-add">
 		      		<tr>
 		      			<td class="t">카테고리명</td>
-		      			<td><input type="text" name="categoryName"></td>
+		      			<td><input type="text" id="name-category-form" name="categoryName"></td>
 		      		</tr>
 		      		<tr>
 		      			<td class="t">설명</td>
-		      			<td><input type="text" name="categoryDesc"></td>
+		      			<td><input type="text" id="contents-category-form" name="categoryDesc"></td>
 		      		</tr>
 		      		<tr>
 		      			<td class="s">&nbsp;</td>

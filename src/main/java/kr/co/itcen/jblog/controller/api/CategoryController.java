@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.itcen.jblog.dto.JSONResult;
 import kr.co.itcen.jblog.service.CategoryService;
@@ -22,13 +25,19 @@ public class CategoryController {
 	
 	@ResponseBody
 	@RequestMapping("/categoryinsert")
-	public List<CategoryVo> adminCategoryInsert(
-			@RequestParam(value="categoryname", required=true, defaultValue = "") String categoryname,
-			@RequestParam(value="categorydesc", required=true, defaultValue = "") String categorydesc,
-			@RequestParam(value="userid", required=true, defaultValue = "") String userid,
+	public String adminCategoryInsert(
+			@RequestBody CategoryVo categoryVo,
 			Model model) {
-		categoryService.adminCategoryAdd(categoryname, categorydesc, userid); 
-		List<CategoryVo> list = categoryService.adminCategorySelect();
-		return list;
+		categoryService.adminCategoryAdd(categoryVo); 
+		CategoryVo vo = categoryService.adminCategoryGetRecentData();
+		
+		String str = "";
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            str = mapper.writeValueAsString(vo);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return str;
 	}
 }

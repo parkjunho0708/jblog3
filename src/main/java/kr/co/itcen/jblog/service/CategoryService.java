@@ -17,13 +17,17 @@ public class CategoryService {
 	private CategoryDao categoryDao;
 
 	// blog-admin-category.jsp 에서 추가한 데이터 전달
-	public void adminCategoryAdd(String categoryname, String categorydesc, String userid) {
-		categoryDao.adminCategoryAdd(categoryname, categorydesc, userid);
+	public void adminCategoryAdd(CategoryVo categoryVo) {
+		categoryDao.adminCategoryAdd(categoryVo);
 	}
 
 	// 전체 category 데이터 가져오기
 	public List<CategoryVo> adminCategorySelect() {
 		return categoryDao.adminCategorySelect();
+	}
+
+	public CategoryVo adminCategoryGetRecentData() {
+		return categoryDao.adminCategoryGetRecentData();
 	}
 
 }
