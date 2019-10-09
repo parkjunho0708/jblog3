@@ -58,7 +58,7 @@ $(function(){
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="${pageContext.servletContext.contextPath}/blog/blog-admin-basic/${authUser.userId}">기본설정</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/blog/${authUser.userId}/admin/basic">기본설정</a></li>
 					<li class="selected">카테고리</li>
 					<li><a href="${pageContext.servletContext.contextPath}/blog/blog-admin-write">글작성</a></li>
 				</ul>
