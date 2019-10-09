@@ -35,6 +35,15 @@ public class BlogDao {
 	public void blogAdminWrite(BlogVo blogVo) {
 		sqlSession.update("blog.blogAdminWrite", blogVo);
 	}
+
+	public void adminCategoryAdd(String categoryname, String categorydesc, String userid) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("categoryname", categoryname);
+		map.put("categorydesc", categorydesc);
+		map.put("userid", userid);
+		
+		sqlSession.insert("blog.adminCategoryAdd", map);
+	}
 	
 	
 

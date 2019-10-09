@@ -9,7 +9,7 @@ a:link 			{ color:#696969; text-decoration:none; font-weight:bold; }
 a:visited 		{ color:#696969F; text-decoration:none; font-weight:bold; }
 a:active 		{ color:#696969; text-decoration:none; font-weight:bold; }
 a:hover 		{ color:#dc143c; text-decoration:none; font-weight:bold; } 
-
+a.del			{ display:block; width:20px; height:20px; background:url("/jblog3/assets/images/delete.png") no-repeat 0 0; font-size:0; }
 
 
 .center-content	{ width:500px; margin:120px auto 50px auto}

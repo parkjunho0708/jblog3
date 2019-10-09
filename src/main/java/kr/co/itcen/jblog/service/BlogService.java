@@ -28,5 +28,4 @@ public class BlogService {
 		blogDao.blogAdminWrite(blogVo);
 	}
 	
-	
 }

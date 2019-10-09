@@ -63,12 +63,6 @@ public class BlogController {
 		return "blog/blog-main";
 	}
 	
-	// http://localhost:8088/jblog/${사용자 아이디}/admin/category
-	@RequestMapping(value = "/blog-admin-category", method = RequestMethod.GET)
-	public String adminCategory() {
-		return "blog/blog-admin-category";
-	}
-	
 	@RequestMapping(value = "/blog-admin-write", method = RequestMethod.GET)
 	public String adminWrite() {
 		return "blog/blog-admin-write";

@@ -16,7 +16,7 @@
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
 					<li class="selected">기본설정</li>
-					<li><a href="${pageContext.servletContext.contextPath}/blog/blog-admin-category">카테고리</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/category/${authUser.userId}/admin/category">카테고리</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/blog/blog-admin-write">글작성</a></li>
 				</ul>
 				<form action="${pageContext.servletContext.contextPath}/blog/blog-admin-write/${blogVo.userId}" method="post"  enctype="multipart/form-data">
