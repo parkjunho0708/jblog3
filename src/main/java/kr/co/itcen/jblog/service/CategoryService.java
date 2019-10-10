@@ -27,8 +27,8 @@ public class CategoryService {
 		return categoryDao.adminCategorySelect(userId);
 	}
 
-	public CategoryVo adminCategoryGetRecentData() {
-		return categoryDao.adminCategoryGetRecentData();
+	public CategoryVo adminCategoryGetRecentData(String userId) {
+		return categoryDao.adminCategoryGetRecentData(userId);
 	}
 
 	public void adminCategoryDelete(int categoryNo, String userId) {

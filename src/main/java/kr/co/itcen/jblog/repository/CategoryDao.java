@@ -27,8 +27,8 @@ public class CategoryDao {
 		return result;
 	}
 
-	public CategoryVo adminCategoryGetRecentData() {
-		return sqlSession.selectOne("category.adminCategoryGetRecentData");
+	public CategoryVo adminCategoryGetRecentData(String userId) {
+		return sqlSession.selectOne("category.adminCategoryGetRecentData", userId);
 	}
 
 	public void adminCategoryDelete(int categoryNo, String userId) {

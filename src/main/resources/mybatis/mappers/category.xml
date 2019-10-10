@@ -19,13 +19,13 @@
 		]]>
 	</select>
 	
-	<select id="adminCategoryGetRecentData"  resultType="categoryvo">
+	<select id="adminCategoryGetRecentData"  parameterType="string" resultType="categoryvo">
 		<![CDATA[
 			select category_no as categoryNo, category_name as categoryName, 
 			category_desc as categoryDesc, 
 			date_format(category_regdate, '%Y-%m-%d %h:%i:%s') as categoryRegdate, 
 			user_id as userId 
-			from category order by category_no desc limit 1
+			from category where user_id = #{userId} order by category_no desc limit 1
 		]]>
 	</select>
 	

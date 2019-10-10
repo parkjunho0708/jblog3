@@ -54,10 +54,10 @@ $(function(){
 		var deleteUrl = $(this).attr('href'); // get the href of the anchor
 		$.ajax({
 			url : deleteUrl,
-			type : "post",
+			type : "delete",
 			dataType : "json",
 			success : function(data) {
-				$("#rowid_" + data).remove();
+				$(".category-tbody tr").remove("#rowid_" + data);
 			},
 			error : function(xhr, error) {
 				console.error("error : " + error);

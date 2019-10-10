@@ -28,7 +28,7 @@ public class CategoryController {
 			@RequestBody CategoryVo categoryVo,
 			Model model) {
 		categoryService.adminCategoryAdd(categoryVo); 
-		CategoryVo vo = categoryService.adminCategoryGetRecentData();
+		CategoryVo vo = categoryService.adminCategoryGetRecentData(categoryVo.getUserId());
 		
 		String str = "";
         ObjectMapper mapper = new ObjectMapper();
