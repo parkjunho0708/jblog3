@@ -13,7 +13,7 @@
 			</c:when>
 			<c:otherwise>
 				<li><a href="${pageContext.servletContext.contextPath}/user/logout">로그아웃</a></li>
-				<li><a href="${pageContext.servletContext.contextPath}/blog/blog-main/${authUser.userId}">내블로그</a></li>
+				<li><a href="${pageContext.servletContext.contextPath}/${authUser.userId}">내블로그</a></li>
 				<li>${authUser.userName}님 안녕하세요 ^^;</li>
 			</c:otherwise>
 		</c:choose>

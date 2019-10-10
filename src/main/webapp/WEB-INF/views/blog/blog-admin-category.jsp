@@ -11,6 +11,7 @@
 <script src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js" type="text/javascript"></script>
 <script>
 $(function(){
+
 	$("#btn-category-add").click(function(){
 		var categoryVo = {
 				"categoryName" : $('input[name=categoryName]').val(),
@@ -24,22 +25,20 @@ $(function(){
 		
 		// ajax 통신
 		$.ajax({
-			url: "${pageContext.servletContext.contextPath}/api/blog/categoryinsert",
+			url: "${pageContext.servletContext.contextPath}/api/category/categoryinsert",
 			contentType : "application/json; charset=utf-8",
 			type: "post",
 			dataType: "json",
 			data: JSON.stringify(categoryVo),
 			success: function(data){
-				var jObj = JSON.parse(data);
-				console.log(data);
+				var vo = JSON.parse(data);
 				$(".category-tbody").append("<tr>" +
-				        "<td>" + jObj.categoryNo + "</td>" +
-				        "<td>" + jObj.categoryName + "</td>" +
-				        "<td>" + jObj.categoryDesc + "</td>" +
-				        "<td>" + jObj.categoryRegdate + "</td>" +
-				        "<td>" +
-				        "<img src='${pageContext.request.contextPath}/assets/images/delete.jpg'" +
-				        "class='delete-img' value='"+ jObj.categoryNo + "'>" +
+				        "<td>" + vo.categoryNo + "</td>" +
+				        "<td>" + vo.categoryName + "</td>" +
+				        "<td>" + vo.categoryDesc + "</td>" +
+				        "<td>" + vo.categoryRegdate + "</td>" +
+				        "<td>" + 
+				        "<a class='category-delete-link' href='${pageContext.servletContext.contextPath}/api/category/categorydelete?categoryNo=" + vo.categoryNo + "&userId=" + vo.userId + "'><img src='${pageContext.request.contextPath}/assets/images/delete.jpg'  class='delete-img' ></a>" +
 				        "</td>" +
 				        "</tr>");
 			},
@@ -47,7 +46,26 @@ $(function(){
 				console.error("error : " + error);
 			}
 		});
-		
+	});
+	
+	
+	$(document).on("click", "a.category-delete-link", function(event) { // when clicking on the link
+		event.preventDefault();
+	  	console.log($(this).attr('href'));
+
+		var deleteUrl = $(this).attr('href'); // get the href of the anchor
+		$.ajax({
+			url : deleteUrl,
+			type : "post",
+			dataType : "json",
+			success : function(data) {
+				$("#rowid_" + data).remove();
+			},
+			error : function(xhr, error) {
+				console.error("error : " + error);
+			}
+		});
+	
 	});
 });
 </script>
@@ -63,7 +81,7 @@ $(function(){
 					<li><a href="${pageContext.servletContext.contextPath}/blog/blog-admin-write">글작성</a></li>
 				</ul>
 				
-		      	<table class="admin-category">
+		      	<table class="admin-cat">
 		      		<thead>
 		      		<tr>
 		      			<th>번호</th>
@@ -76,13 +94,13 @@ $(function(){
 		      		
 		      		<tbody class="category-tbody">
 		      		<c:forEach items="${list}" var="vo" varStatus="status">
-					<tr>
+					<tr id="rowid_${vo.categoryNo}">
 						<td>${vo.categoryNo}</td>
 						<td>${vo.categoryName}</td>
 						<td>${vo.categoryDesc}</td>
 						<td>${vo.categoryRegdate}</td>
 						<td>
-							<img src="${pageContext.request.contextPath}/assets/images/delete.jpg" value="카테고리번호" class="delete-img">
+							<a class='category-delete-link' href='${pageContext.servletContext.contextPath}/api/category/categorydelete?categoryNo=${vo.categoryNo}&userId=${vo.userId}' ><img src='${pageContext.request.contextPath}/assets/images/delete.jpg' class='delete-img'></a>
 						</td>
 					</tr>
 					</c:forEach> 

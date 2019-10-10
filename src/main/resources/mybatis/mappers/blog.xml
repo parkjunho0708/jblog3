@@ -18,7 +18,14 @@
 	
 	<update id="blogAdminWrite" parameterType="blogvo">
 		<![CDATA[
-			update blog set blog_title = #{blogTitle}, blog_logo = #{blogLogo} 
+			update blog set blog_title = #{blogTitle}, 
+		]]>
+		<if test="blogLogo != null">
+		<![CDATA[
+			blog_logo = #{blogLogo} 
+		]]>
+		</if>
+		<![CDATA[
 			where user_id = #{userId}
 		]]>
 	</update>

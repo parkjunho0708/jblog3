@@ -22,12 +22,16 @@ public class CategoryService {
 	}
 
 	// 전체 category 데이터 가져오기
-	public List<CategoryVo> adminCategorySelect() {
-		return categoryDao.adminCategorySelect();
+	public List<CategoryVo> adminCategorySelect(String userId) {
+		return categoryDao.adminCategorySelect(userId);
 	}
 
 	public CategoryVo adminCategoryGetRecentData() {
 		return categoryDao.adminCategoryGetRecentData();
+	}
+
+	public void adminCategoryDelete(int categoryNo, String userId) {
+		categoryDao.adminCategoryDelete(categoryNo, userId);
 	}
 
 }

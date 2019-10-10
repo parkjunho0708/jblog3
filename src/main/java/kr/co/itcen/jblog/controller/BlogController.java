@@ -17,7 +17,7 @@ import kr.co.itcen.jblog.service.FileUploadService;
 import kr.co.itcen.jblog.vo.BlogVo;
 
 @Controller
-@RequestMapping("/blog") // asset을 아이디로 생각하지 않게 하기 위한 처리
+@RequestMapping("/{userId:(?!assets).*}") // asset을 아이디로 생각하지 않게 하기 위한 처리
 public class BlogController {
 
 	private static final Log Log = LogFactory.getLog(BlogController.class);
@@ -28,7 +28,7 @@ public class BlogController {
 	@Autowired
 	FileUploadService fileUploadService;
 
-	@RequestMapping(value = "/blog-main/{userId}", method = RequestMethod.GET)
+	@RequestMapping({""})
 	public String index(
 			@PathVariable("userId") String userId,
 			Model model) {
@@ -39,7 +39,7 @@ public class BlogController {
 
 	// http://localhost:8088/jblog/${사용자 아이디}/admin/basic
 	// admin-basic 페이지 처음 접속
-	@RequestMapping(value = "{userId}/admin/basic", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/basic")
 	public String adminBasic(
 			@PathVariable("userId") String userId,
 			Model model) {
@@ -55,9 +55,15 @@ public class BlogController {
 			@ModelAttribute BlogVo blogVo,
 			@RequestParam(value="logo-file", required = false) MultipartFile multipartFile,
 			Model model) {
-		String saveFileName = fileUploadService.restore(multipartFile);
+		System.out.println("multipartFile : " + multipartFile);
+		if(multipartFile != null) { 
+			System.out.println("multipartFile : " + multipartFile);
+			String saveFileName = fileUploadService.restore(multipartFile);
+			blogVo.setBlogLogo(saveFileName);
+		} else {
+			blogVo.setBlogLogo("no_image");
+		}
 		blogVo.setUserId(userId);
-		blogVo.setBlogLogo(saveFileName);
 		blogService.blogAdminWrite(blogVo); // 기본설정 수정
 		model.addAttribute("blogVo", blogVo);
 		return "blog/blog-main";

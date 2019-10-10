@@ -12,7 +12,7 @@
 			</c:when>
 			<c:otherwise>
 				<li><a href="${pageContext.servletContext.contextPath}/user/logout">로그아웃</a></li>
-				<li><a href="${pageContext.servletContext.contextPath}/blog/${authUser.userId}/admin/basic">블로그 관리</a></li>
+				<li><a href="${pageContext.servletContext.contextPath}/${authUser.userId}/admin/basic">블로그 관리</a></li>
 			</c:otherwise>
 		</c:choose>
 	</ul>

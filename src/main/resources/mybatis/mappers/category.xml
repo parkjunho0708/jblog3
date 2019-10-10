@@ -3,19 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="category">
 
-	<insert id="adminCategoryAdd" parameterType="categoryvo">
+	<insert id="adminCategoryAdd" parameterType="categoryvo" >
 		<![CDATA[
 			insert into category values (null, #{categoryName}, #{categoryDesc}, now(), #{userId})
 		]]>
 	</insert>
 	
-	<select id="getAllCategoryList"  resultType="categoryvo">
+	<select id="getAllCategoryList"  parameterType="string" resultType="categoryvo">
 		<![CDATA[
 			select category_no as categoryNo, category_name as categoryName, 
 			category_desc as categoryDesc, 
 			date_format(category_regdate, '%Y-%m-%d %h:%i:%s') as categoryRegdate, 
 			user_id as userId 
-			from category
+			from category where user_id = #{userId}
 		]]>
 	</select>
 	
@@ -25,8 +25,14 @@
 			category_desc as categoryDesc, 
 			date_format(category_regdate, '%Y-%m-%d %h:%i:%s') as categoryRegdate, 
 			user_id as userId 
-			from category order by category_no desc limit 1;
+			from category order by category_no desc limit 1
 		]]>
 	</select>
+	
+	<delete id="adminCategoryDelete" parameterType="map">
+		<![CDATA[
+			delete from category where user_id = #{userId} and category_no = #{categoryNo}
+		]]>
+	</delete>
 
 </mapper>

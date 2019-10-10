@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,8 +26,9 @@ public class CategoryController {
 	// http://localhost:8088/jblog/${사용자 아이디}/admin/category
 	@RequestMapping(value = "{userId}/admin/category", method = RequestMethod.GET)
 	public String adminCategory(
+			@PathVariable("userId") String userId,
 			Model model) {
-		List<CategoryVo> list = categoryService.adminCategorySelect();
+		List<CategoryVo> list = categoryService.adminCategorySelect(userId);
 		model.addAttribute("list", list);
 		return "blog/blog-admin-category";
 	}

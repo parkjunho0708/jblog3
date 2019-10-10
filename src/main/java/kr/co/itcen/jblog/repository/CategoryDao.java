@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.co.itcen.jblog.vo.BlogVo;
 import kr.co.itcen.jblog.vo.CategoryVo;
 
 @Repository
@@ -22,13 +21,20 @@ public class CategoryDao {
 		sqlSession.insert("category.adminCategoryAdd", categoryVo);
 	}
 
-	public List<CategoryVo> adminCategorySelect() {
-		List<CategoryVo> result = sqlSession.selectList("category.getAllCategoryList");
+	public List<CategoryVo> adminCategorySelect(String userId) {
+		List<CategoryVo> result = sqlSession.selectList("category.getAllCategoryList", userId);
 		return result;
 	}
 
 	public CategoryVo adminCategoryGetRecentData() {
 		return sqlSession.selectOne("category.adminCategoryGetRecentData");
+	}
+
+	public void adminCategoryDelete(int categoryNo, String userId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("categoryNo", categoryNo);
+		map.put("userId", userId);
+		sqlSession.delete("category.adminCategoryDelete", map);
 	}
 	
 	

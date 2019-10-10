@@ -34,7 +34,7 @@
 			      		</tr>      		
 			      		<tr>
 			      			<td class="t">이미지 파일 업로드</td>
-			      			<td><input type="file" name="logo-file"></td>      			
+			      			<td><input type="file" name="logo-file" ></td>      			
 			      		</tr>           		
 			      		<tr>
 			      			<td class="t">&nbsp;</td>
