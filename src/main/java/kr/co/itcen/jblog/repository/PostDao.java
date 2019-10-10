@@ -37,4 +37,8 @@ public class PostDao {
 		return sqlSession.selectOne("blog.getPost", map);
 	}
 
+	public PostVo getPostInfo(int postNo) {
+		return sqlSession.selectOne("post.getPostInfo", postNo);
+	}
+
 }

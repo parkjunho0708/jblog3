@@ -1,6 +1,7 @@
 package kr.co.itcen.jblog.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import kr.co.itcen.jblog.repository.BlogDao;
 import kr.co.itcen.jblog.repository.CategoryDao;
 import kr.co.itcen.jblog.repository.PostDao;
 import kr.co.itcen.jblog.vo.BlogVo;
+import kr.co.itcen.jblog.vo.PostVo;
 
 @Service
 public class BlogService {
@@ -41,8 +43,8 @@ public class BlogService {
 	
 	public Map<String, Object> getBlogInfomation(String userId) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("blogVo", blogDao.get(userId));
-		map.put("categoryList", categoryDao.getCategory(userId));
+		map.put("blogVo", blogDao.get(userId)); // 블로그 데이터 가져오기
+		map.put("categoryList", categoryDao.getCategoryList(userId)); // 카테고리 리스트로 가져오기
 		return map;
 	}
 	
@@ -53,9 +55,8 @@ public class BlogService {
 		return map;
 	}
 
-	public Object mainPostList(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PostVo> blogMainPostList(String userId) {
+		return blogDao.blogMainPostList(userId);
 	}
 
 	public Object categoryPost(Long categoryNo) {

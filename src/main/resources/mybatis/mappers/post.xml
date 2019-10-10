@@ -8,5 +8,22 @@
 			insert into post values (null, #{postTitle}, #{postContents}, now(), #{categoryNo})
 		]]>
 	</insert>
+	
+	<select id="getblogMainPostList" parameterType="string" resultType="postvo">
+		<![CDATA[
+			select post_no as postNo, post_title as postTitle, 
+			date_format(post_createdate, '%Y-%m-%d %h:%i:%s') as postCreatedate
+			from post where category_no = (select category_no from category where user_id = #{userId} order by category_no limit 1) 
+			order by postCreatedate desc limit 10
+		]]>
+	</select>
+	
+	<select id="getPostInfo" parameterType="int" resultType="postvo">
+		<![CDATA[
+			select post_no as postNo, post_title as postTitle, post_contents as postContents,
+			date_format(post_createdate, '%Y-%m-%d %h:%i:%s') as postCreatedate
+			from post where post_no = #{postNo}
+		]]>
+	</select>
 
 </mapper>

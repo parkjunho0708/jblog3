@@ -1,6 +1,7 @@
 package kr.co.itcen.jblog.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,10 @@ public class CategoryService {
 
 	public List<CategoryVo> adminCategoryMatchedUserId(String userId) {
 		return categoryDao.adminCategoryMatchedUserId(userId);
+	}
+
+	public CategoryVo getCategoryInformation(int categoryNo) {
+		return categoryDao.getCategoryInformation(categoryNo);
 	}
 
 }

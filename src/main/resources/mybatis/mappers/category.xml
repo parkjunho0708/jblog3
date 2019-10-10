@@ -41,5 +41,20 @@
 			from category where user_id = #{userId}
 		]]>
 	</select>
+	
+	<select id="getCategoryListTopSeven"  parameterType="string" resultType="categoryvo">
+		<![CDATA[
+			select category_no as categoryNo, category_name as categoryName 
+			from category where user_id = #{userId} order by category_no desc limit 7
+		]]>
+	</select>
+		
+	<select id="getCategoryInfo"  parameterType="int" resultType="categoryvo">
+		<![CDATA[
+			select category_no as categoryNo, category_name as categoryName, category_desc as categoryDesc, 
+			date_format(category_regdate, '%Y-%m-%d %h:%i:%s') as categoryRegdate 
+			from category where category_no = #{categoryNo}
+		]]>
+	</select>
 
 </mapper>

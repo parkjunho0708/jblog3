@@ -64,7 +64,7 @@ public class BlogController {
 			categoryNo = pathNo1.get();
 			map.put("postList", blogService.categoryPost(categoryNo));
 		} else {
-			map.put("postList", blogService.mainPostList(userId));
+			map.put("postList", blogService.blogMainPostList(userId));
 		}
 
 		map.putAll(blogService.getBlogInfomation(userId));
@@ -77,15 +77,6 @@ public class BlogController {
 
 		return "blog/blog-main";
 	}
-	
-//	@RequestMapping({""})
-//	public String index(
-//			@PathVariable("userId") String userId,
-//			Model model) {
-//		BlogVo blogVo = blogService.get(userId);
-//		model.addAttribute("blogVo", blogVo);
-//		return "blog/blog-main";
-//	}
 
 	// 블로그 관리 페이지
 	@RequestMapping(value = {"/admin/basic"})
@@ -115,7 +106,7 @@ public class BlogController {
 		blogVo.setUserId(userId);
 		blogService.blogAdminWrite(blogVo); // 기본설정 수정
 		model.addAttribute("blogVo", blogVo);
-		return "blog/blog-main";
+		return "redirect:/" + userId;
 	}
 	
 	// 카테고리 관리 페이지
@@ -145,5 +136,25 @@ public class BlogController {
 		System.out.println("userId : " + userId);
 		postService.adminPostInsert(postVo);
 		return "redirect:/" + userId;
+	}
+	
+	// 포스트 상세보기
+	@RequestMapping(value = { "/{postNo}/postInfo" })
+	public String getPostInfo(
+			@PathVariable("postNo") int postNo, 
+			Model model) {
+		PostVo postVo = postService.getPostInfo(postNo);
+		model.addAttribute("postVo", postVo);
+		return "post/blog-post-Info";
+	}
+	
+	// 카테고리 상세보기
+	@RequestMapping(value = { "/{categoryNo}/categoryInfo" })
+	public String getCategoryInfo(
+			@PathVariable("categoryNo") int categoryNo, 
+			Model model) {
+		CategoryVo categoryVo = categoryService.getCategoryInformation(categoryNo);
+		model.addAttribute("categoryVo", categoryVo);
+		return "category/blog-category-Info";
 	}
 }

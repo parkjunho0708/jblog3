@@ -24,7 +24,9 @@
 					<p>
 				</div>
 				<ul class="blog-list">
-					<li><a href="">Spring Camp 2016 참여기</a> <span>2015/05/02</span>	</li>
+					<c:forEach items="${postList}" var="postList" varStatus="status">
+						<li><a href="${pageContext.servletContext.contextPath}/${authUser.userId}/${postList.postNo}/postInfo">${postList.postTitle}</a><span>${postList.postCreatedate}</span></li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>

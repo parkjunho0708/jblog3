@@ -3,6 +3,7 @@ package kr.co.itcen.jblog.repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,20 @@ public class CategoryDao {
 		sqlSession.delete("category.adminCategoryDelete", map);
 	}
 
+	// 카테고리 리스트로 가져오기
 	public List<CategoryVo> adminCategoryMatchedUserId(String userId) {
 		List<CategoryVo> list = sqlSession.selectList("category.getAllCategoryName", userId);
 		return list;
 	}
 
-	public Object getCategory(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public CategoryVo getCategoryInformation(int categoryNo) {
+		return sqlSession.selectOne("category.getCategoryInfo", categoryNo);
+	}
+
+	// 카테고리 상위 7개 출력
+	public List<CategoryVo> getCategoryList(String userId) {
+		List<CategoryVo> list = sqlSession.selectList("category.getCategoryListTopSeven", userId);
+		return list;
 	}
 
 }

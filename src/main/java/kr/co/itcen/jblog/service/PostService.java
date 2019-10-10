@@ -15,5 +15,9 @@ public class PostService {
 	public void adminPostInsert(PostVo postVo) {
 		postDao.adminPostInsert(postVo);
 	}
+
+	public PostVo getPostInfo(int postNo) {
+		return postDao.getPostInfo(postNo);
+	}
 	
 }

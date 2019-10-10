@@ -1,6 +1,7 @@
 package kr.co.itcen.jblog.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.itcen.jblog.vo.BlogVo;
+import kr.co.itcen.jblog.vo.PostVo;
 
 @Repository
 public class BlogDao {
@@ -42,6 +44,11 @@ public class BlogDao {
 		map.put("categorydesc", categorydesc);
 		map.put("userid", userid);
 		sqlSession.insert("blog.adminCategoryAdd", map);
+	}
+
+	public List<PostVo> blogMainPostList(String userId) {
+		List<PostVo> list = sqlSession.selectList("post.getblogMainPostList", userId);
+		return list;
 	}
 
 }
