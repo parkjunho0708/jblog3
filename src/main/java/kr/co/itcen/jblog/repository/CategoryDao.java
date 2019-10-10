@@ -36,7 +36,10 @@ public class CategoryDao {
 		map.put("userId", userId);
 		sqlSession.delete("category.adminCategoryDelete", map);
 	}
-	
-	
+
+	public List<CategoryVo> adminCategoryMatchedUserId(String userId) {
+		List<CategoryVo> list = sqlSession.selectList("category.getAllCategoryName", userId);
+		return list;
+	}
 
 }

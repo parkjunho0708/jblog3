@@ -34,5 +34,12 @@
 			delete from category where user_id = #{userId} and category_no = #{categoryNo}
 		]]>
 	</delete>
+	
+	<select id="getAllCategoryName"  parameterType="string" resultType="categoryvo">
+		<![CDATA[
+			select category_no as categoryNo, category_name as categoryName 
+			from category where user_id = #{userId}
+		]]>
+	</select>
 
 </mapper>

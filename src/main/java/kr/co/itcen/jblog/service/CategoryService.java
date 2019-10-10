@@ -34,4 +34,8 @@ public class CategoryService {
 		categoryDao.adminCategoryDelete(categoryNo, userId);
 	}
 
+	public List<CategoryVo> adminCategoryMatchedUserId(String userId) {
+		return categoryDao.adminCategoryMatchedUserId(userId);
+	}
+
 }

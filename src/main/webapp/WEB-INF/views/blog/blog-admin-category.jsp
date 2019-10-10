@@ -48,10 +48,8 @@ $(function(){
 		});
 	});
 	
-	
 	$(document).on("click", "a.category-delete-link", function(event) { // when clicking on the link
 		event.preventDefault();
-	  	console.log($(this).attr('href'));
 
 		var deleteUrl = $(this).attr('href'); // get the href of the anchor
 		$.ajax({
@@ -76,9 +74,9 @@ $(function(){
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="${pageContext.servletContext.contextPath}/blog/${authUser.userId}/admin/basic">기본설정</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/${authUser.userId}/admin/basic">기본설정</a></li>
 					<li class="selected">카테고리</li>
-					<li><a href="${pageContext.servletContext.contextPath}/blog/blog-admin-write">글작성</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/${authUser.userId}/admin/write">글작성</a></li>
 				</ul>
 				
 		      	<table class="admin-cat">

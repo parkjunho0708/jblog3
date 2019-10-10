@@ -1,5 +1,7 @@
 package kr.co.itcen.jblog.controller;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.itcen.jblog.service.BlogService;
+import kr.co.itcen.jblog.service.CategoryService;
 import kr.co.itcen.jblog.service.FileUploadService;
+import kr.co.itcen.jblog.service.PostService;
 import kr.co.itcen.jblog.vo.BlogVo;
+import kr.co.itcen.jblog.vo.CategoryVo;
+import kr.co.itcen.jblog.vo.PostVo;
 
 @Controller
 @RequestMapping("/{userId:(?!assets).*}") // asset을 아이디로 생각하지 않게 하기 위한 처리
@@ -26,8 +32,15 @@ public class BlogController {
 	private BlogService blogService;
 	
 	@Autowired
+	private CategoryService categoryService;
+	
+	@Autowired
+	private PostService postService;
+	
+	@Autowired
 	FileUploadService fileUploadService;
 
+	// 블로그 메인
 	@RequestMapping({""})
 	public String index(
 			@PathVariable("userId") String userId,
@@ -37,9 +50,8 @@ public class BlogController {
 		return "blog/blog-main";
 	}
 
-	// http://localhost:8088/jblog/${사용자 아이디}/admin/basic
-	// admin-basic 페이지 처음 접속
-	@RequestMapping(value = "/admin/basic")
+	// 블로그 관리 페이지
+	@RequestMapping(value = {"/admin/basic"})
 	public String adminBasic(
 			@PathVariable("userId") String userId,
 			Model model) {
@@ -48,8 +60,8 @@ public class BlogController {
 		return "blog/blog-admin-basic";
 	}
 	
-	// blog-admin-write.jsp 에서 기본설정 수정 (update)
-	@RequestMapping(value = "/blog-admin-write/{userId}", method = RequestMethod.POST)
+	// 블로그 정보 수정
+	@RequestMapping(value = {"/admin/basic/update"}, method = RequestMethod.POST)
 	public String adminBasicWrite(
 			@PathVariable("userId") String userId,
 			@ModelAttribute BlogVo blogVo,
@@ -69,8 +81,32 @@ public class BlogController {
 		return "blog/blog-main";
 	}
 	
-	@RequestMapping(value = "/blog-admin-write", method = RequestMethod.GET)
-	public String adminWrite() {
+	// 카테고리 관리 페이지
+	@RequestMapping(value = {"/admin/category"}, method = RequestMethod.GET)
+	public String adminCategory(@PathVariable("userId") String userId, Model model) {
+		List<CategoryVo> list = categoryService.adminCategorySelect(userId);
+		model.addAttribute("list", list);
+		return "blog/blog-admin-category";
+	}
+	
+	// 블로그 포스트 글 작성 페이지
+	@RequestMapping(value = {"/admin/write"}, method = RequestMethod.GET)
+	public String adminWrite(
+			@PathVariable("userId") String userId,
+			Model model) {
+		List<CategoryVo> list = categoryService.adminCategoryMatchedUserId(userId);
+		System.out.println("list : " + list.get(0).toString());
+		System.out.println("list : " + list.get(1).toString());
+		model.addAttribute("list", list);
 		return "blog/blog-admin-write";
+	}
+	
+	// 블로그 포스트 글 작성
+	@RequestMapping(value = {"/admin/post/update"}, method = RequestMethod.POST)
+	public String adminPostWrite(
+			@ModelAttribute PostVo postVo,
+			Model model) {
+		postService.adminPostInsert(postVo);
+		return "blog/blog-main";
 	}
 }
