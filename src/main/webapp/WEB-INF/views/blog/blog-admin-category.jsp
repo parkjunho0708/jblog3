@@ -32,7 +32,7 @@ $(function(){
 			data: JSON.stringify(categoryVo),
 			success: function(data){
 				var vo = JSON.parse(data);
-				$(".category-tbody").append("<tr>" +
+				$(".category-tbody").append("<tr id='rowid_" + ${vo.categoryNo}"'>" +
 				        "<td>" + vo.categoryNo + "</td>" +
 				        "<td>" + vo.categoryName + "</td>" +
 				        "<td>" + vo.categoryDesc + "</td>" +

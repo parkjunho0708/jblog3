@@ -42,4 +42,9 @@ public class CategoryDao {
 		return list;
 	}
 
+	public Object getCategory(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

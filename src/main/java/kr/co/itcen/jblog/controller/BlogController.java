@@ -1,6 +1,9 @@
 package kr.co.itcen.jblog.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,14 +44,48 @@ public class BlogController {
 	FileUploadService fileUploadService;
 
 	// 블로그 메인
-	@RequestMapping({""})
+	@RequestMapping(value = { "", "/{pathNo1}", "/{pathNo1}/{pathNo2}" })
 	public String index(
-			@PathVariable("userId") String userId,
+			@PathVariable(value = "userId") String userId,
+			@PathVariable(value = "pathNo1") Optional<Long> pathNo1,
+			@PathVariable(value = "pathNo2") Optional<Long> pathNo2, 
 			Model model) {
-		BlogVo blogVo = blogService.get(userId);
-		model.addAttribute("blogVo", blogVo);
+
+		Long categoryNo = 0L;
+		Long postNo = 0L;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		if (pathNo2.isPresent()) { // 카테고리의 글
+			postNo = pathNo2.get();
+			categoryNo = pathNo1.get();
+			map.putAll(blogService.getCategoryPost(categoryNo, postNo));
+		} else if (pathNo1.isPresent()) { // 카테고리만
+			categoryNo = pathNo1.get();
+			map.put("postList", blogService.categoryPost(categoryNo));
+		} else {
+			map.put("postList", blogService.mainPostList(userId));
+		}
+
+		map.putAll(blogService.getBlogInfomation(userId));
+
+		if (map.get("blogVo") == null) {
+			return "error/404";
+		}
+
+		model.addAllAttributes(map);
+
 		return "blog/blog-main";
 	}
+	
+//	@RequestMapping({""})
+//	public String index(
+//			@PathVariable("userId") String userId,
+//			Model model) {
+//		BlogVo blogVo = blogService.get(userId);
+//		model.addAttribute("blogVo", blogVo);
+//		return "blog/blog-main";
+//	}
 
 	// 블로그 관리 페이지
 	@RequestMapping(value = {"/admin/basic"})
@@ -95,18 +132,18 @@ public class BlogController {
 			@PathVariable("userId") String userId,
 			Model model) {
 		List<CategoryVo> list = categoryService.adminCategoryMatchedUserId(userId);
-		System.out.println("list : " + list.get(0).toString());
-		System.out.println("list : " + list.get(1).toString());
 		model.addAttribute("list", list);
 		return "blog/blog-admin-write";
 	}
 	
-	// 블로그 포스트 글 작성
+	// 블로그 포스트 글 작성 및 추가
 	@RequestMapping(value = {"/admin/post/update"}, method = RequestMethod.POST)
 	public String adminPostWrite(
 			@ModelAttribute PostVo postVo,
+			@PathVariable("userId") String userId,
 			Model model) {
+		System.out.println("userId : " + userId);
 		postService.adminPostInsert(postVo);
-		return "blog/blog-main";
+		return "redirect:/" + userId;
 	}
 }

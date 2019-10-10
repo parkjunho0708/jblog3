@@ -41,10 +41,7 @@ public class BlogDao {
 		map.put("categoryname", categoryname);
 		map.put("categorydesc", categorydesc);
 		map.put("userid", userid);
-		
 		sqlSession.insert("blog.adminCategoryAdd", map);
 	}
-	
-	
 
 }
