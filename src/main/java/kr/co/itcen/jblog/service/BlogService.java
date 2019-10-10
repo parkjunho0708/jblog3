@@ -48,10 +48,10 @@ public class BlogService {
 		return map;
 	}
 	
-	public Map<String,Object> getCategoryPost(Long cateNo, Long postNo) {
+	public Map<String,Object> getCategoryPost(Integer categoryNo, Integer postNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("currentPost", postDao.getPost(cateNo, postNo));
-		map.put("postList", postDao.categoryPost(cateNo));
+		map.put("currentPost", postDao.getPost(categoryNo, postNo));
+		map.put("postList", postDao.categoryPost(categoryNo));
 		return map;
 	}
 
@@ -59,7 +59,7 @@ public class BlogService {
 		return blogDao.blogMainPostList(userId);
 	}
 
-	public Object categoryPost(Long categoryNo) {
+	public Integer categoryPost(Integer categoryNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

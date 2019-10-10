@@ -47,22 +47,22 @@ public class BlogController {
 	@RequestMapping(value = { "", "/{pathNo1}", "/{pathNo1}/{pathNo2}" })
 	public String index(
 			@PathVariable(value = "userId") String userId,
-			@PathVariable(value = "pathNo1") Optional<Long> pathNo1,
-			@PathVariable(value = "pathNo2") Optional<Long> pathNo2, 
+			@PathVariable(value = "pathNo1") Optional<Integer> pathNo1,
+			@PathVariable(value = "pathNo2") Optional<Integer> pathNo2, 
 			Model model) {
 
-		Long categoryNo = 0L;
-		Long postNo = 0L;
+		Integer categoryNo = 0;
+		Integer postNo = 0;
 
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		if (pathNo2.isPresent()) { // 카테고리의 글
+		Map<String, Object> map = new HashMap<String, Object>(); 
+			
+		if (pathNo1.isPresent()) { // 카테고리만
+			categoryNo = pathNo1.get();
+			map.put("postList", blogService.categoryPost(categoryNo));
+		} else if (pathNo2.isPresent()) { // 카테고리의 글
 			postNo = pathNo2.get();
 			categoryNo = pathNo1.get();
 			map.putAll(blogService.getCategoryPost(categoryNo, postNo));
-		} else if (pathNo1.isPresent()) { // 카테고리만
-			categoryNo = pathNo1.get();
-			map.put("postList", blogService.categoryPost(categoryNo));
 		} else {
 			map.put("postList", blogService.blogMainPostList(userId));
 		}

@@ -26,13 +26,13 @@ public class PostDao {
 		return sqlSession.selectList("blog.mainPost", userId);
 	}
 	
-	public List<PostVo> categoryPost(Long cateNo) {
-		return sqlSession.selectList("blog.categoryPost", cateNo);
+	public List<PostVo> categoryPost(Integer categoryNo) {
+		return sqlSession.selectList("blog.categoryPost", categoryNo);
 	}
 	
-	public PostVo getPost(Long cateNo, Long postNo) {
-		Map<String, Long> map = new HashMap<String, Long>();
-		map.put("cateNo", cateNo);
+	public PostVo getPost(Integer categoryNo, Integer postNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("cateNo", categoryNo);
 		map.put("postNo", postNo);
 		return sqlSession.selectOne("blog.getPost", map);
 	}
