@@ -95,7 +95,6 @@ public class BlogController {
 			@ModelAttribute BlogVo blogVo,
 			@RequestParam(value="logo-file", required = false) MultipartFile multipartFile,
 			Model model) {
-		System.out.println("multipartFile : " + multipartFile);
 		if(multipartFile != null) { 
 			System.out.println("multipartFile : " + multipartFile);
 			String saveFileName = fileUploadService.restore(multipartFile);

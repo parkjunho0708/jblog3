@@ -33,8 +33,8 @@ public class CategoryDao {
 
 	public void adminCategoryDelete(int categoryNo, String userId) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("categoryNo", categoryNo);
 		map.put("userId", userId);
+		map.put("categoryNo", categoryNo);
 		sqlSession.delete("category.adminCategoryDelete", map);
 	}
 

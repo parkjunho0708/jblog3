@@ -28,11 +28,11 @@ $(function(){
 			url: "${pageContext.servletContext.contextPath}/api/category/categoryinsert",
 			contentType : "application/json; charset=utf-8",
 			type: "post",
-			dataType: "json",
+			dataType: "json", // JSON 형식으로 받을거다!! (MIME type)
 			data: JSON.stringify(categoryVo),
 			success: function(data){
 				var vo = JSON.parse(data);
-				$(".category-tbody").append("<tr id='rowid_" + ${vo.categoryNo}"'>" +
+				$(".category-tbody").append("<tr>" +
 				        "<td>" + vo.categoryNo + "</td>" +
 				        "<td>" + vo.categoryName + "</td>" +
 				        "<td>" + vo.categoryDesc + "</td>" +
@@ -50,14 +50,14 @@ $(function(){
 	
 	$(document).on("click", "a.category-delete-link", function(event) { // when clicking on the link
 		event.preventDefault();
-
 		var deleteUrl = $(this).attr('href'); // get the href of the anchor
+		var clickedRow = $(this);
 		$.ajax({
 			url : deleteUrl,
 			type : "delete",
 			dataType : "json",
 			success : function(data) {
-				$(".category-tbody tr").remove("#rowid_" + data);
+				$(clickedRow).parent().parent().remove();
 			},
 			error : function(xhr, error) {
 				console.error("error : " + error);
@@ -92,7 +92,7 @@ $(function(){
 		      		
 		      		<tbody class="category-tbody">
 		      		<c:forEach items="${list}" var="vo" varStatus="status">
-					<tr id="rowid_${vo.categoryNo}">
+					<tr>
 						<td>${vo.categoryNo}</td>
 						<td>${vo.categoryName}</td>
 						<td>${vo.categoryDesc}</td>

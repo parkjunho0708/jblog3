@@ -73,7 +73,8 @@
 	</mvc:interceptors>
 
 	<!-- file upload mapping -->
-	<mvc:resources location="file:/upload/" mapping="/upload/*"/>
+	<mvc:resources location="/upload/" mapping="/upload/**"/>
+	<!-- <mvc:resources mapping="/resources/**" location="/resources/" /> -->
 
 	<!-- ViewResolver 설정 -->
 	<bean id="viewResolver"
