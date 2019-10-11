@@ -18,11 +18,11 @@
 	
 	<update id="blogAdminWrite" parameterType="blogvo">
 		<![CDATA[
-			update blog set blog_title = #{blogTitle}, 
+			update blog set blog_title = #{blogTitle}
 		]]>
 		<if test="blogLogo != null">
 		<![CDATA[
-			blog_logo = #{blogLogo} 
+			,blog_logo = #{blogLogo} 
 		]]>
 		</if>
 		<![CDATA[

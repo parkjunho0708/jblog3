@@ -73,7 +73,7 @@
 	</mvc:interceptors>
 
 	<!-- file upload mapping -->
-	<mvc:resources location="/upload/" mapping="/upload/**"/>
+	<mvc:resources location="file:/upload/" mapping="/assets/img/**"/>
 	<!-- <mvc:resources mapping="/resources/**" location="/resources/" /> -->
 
 	<!-- ViewResolver 설정 -->

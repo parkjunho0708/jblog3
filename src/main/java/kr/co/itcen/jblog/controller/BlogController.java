@@ -95,13 +95,12 @@ public class BlogController {
 			@ModelAttribute BlogVo blogVo,
 			@RequestParam(value="logo-file", required = false) MultipartFile multipartFile,
 			Model model) {
-		if(multipartFile != null) { 
-			System.out.println("multipartFile : " + multipartFile);
+		
+		if(!multipartFile.isEmpty()) {
 			String saveFileName = fileUploadService.restore(multipartFile);
-			blogVo.setBlogLogo(saveFileName);
-		} else {
-			blogVo.setBlogLogo("no_image");
-		}
+			blogVo.setBlogLogo(saveFileName);			
+		} 
+		
 		blogVo.setUserId(userId);
 		blogService.blogAdminWrite(blogVo); // 기본설정 수정
 		model.addAttribute("blogVo", blogVo);
