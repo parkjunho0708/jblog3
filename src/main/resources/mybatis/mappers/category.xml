@@ -5,13 +5,13 @@
 
 	<insert id="adminCategoryAdd" parameterType="categoryvo" >
 		<![CDATA[
-			insert into category values (null, #{categoryName}, #{categoryDesc}, now(), #{userId})
+			insert into category values (null, #{categoryName}, #{categoryDesc}, now(), 'true', 0, #{userId})
 		]]>
 	</insert>
 	
 	<select id="getAllCategoryList"  parameterType="string" resultType="categoryvo">
 		<![CDATA[
-			select category_no as categoryNo, category_name as categoryName, 
+			select category_no as categoryNo, category_name as categoryName, post_count as postCount, 
 			category_desc as categoryDesc, 
 			date_format(category_regdate, '%Y-%m-%d %h:%i:%s') as categoryRegdate, 
 			user_id as userId 

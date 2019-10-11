@@ -40,7 +40,7 @@ $(function(){
 				$(".category-tbody").append("<tr>" +
 				        "<td>" + vo.categoryNo + "</td>" +
 				        "<td>" + vo.categoryName + "</td>" +
-				        "<td>" + vo.categoryDesc + "</td>" +
+				        "<td>" + vo.postCount + "</td>" +
 				        "<td>" + vo.categoryRegdate + "</td>" +
 				        "<td>" + 
 				        "<a class='category-delete-link' href='${pageContext.servletContext.contextPath}/api/category/categorydelete?categoryNo=" + vo.categoryNo + "&userId=" + vo.userId + "'><img src='${pageContext.request.contextPath}/assets/images/delete.jpg'  class='delete-img' ></a>" +
@@ -94,7 +94,7 @@ $(function(){
 		      		<tr>
 		      			<th>번호</th>
 		      			<th>카테고리명</th>
-		      			<th>설명</th>
+		      			<th>포스트 수</th>
 		      			<th>날짜</th>
 		      			<th>&nbsp;</th>      			
 		      		</tr>
@@ -105,7 +105,7 @@ $(function(){
 					<tr>
 						<td>${vo.categoryNo}</td>
 						<td>${vo.categoryName}</td>
-						<td>${vo.categoryDesc}</td>
+						<td>${vo.postCount}</td>
 						<td>${vo.categoryRegdate}</td>
 						<td>
 							<a class='category-delete-link' href='${pageContext.servletContext.contextPath}/api/category/categorydelete?categoryNo=${vo.categoryNo}&userId=${vo.userId}' ><img src='${pageContext.request.contextPath}/assets/images/delete.jpg' class='delete-img'></a>
