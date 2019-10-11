@@ -5,6 +5,7 @@ public class PostVo {
 	private String postTitle;
 	private String postContents;
 	private String postCreatedate;
+	private String postStatus;
 	private int categoryNo;
 
 	public int getPostNo() {
@@ -39,6 +40,14 @@ public class PostVo {
 		this.postCreatedate = postCreatedate;
 	}
 
+	public String getPostStatus() {
+		return postStatus;
+	}
+
+	public void setPostStatus(String postStatus) {
+		this.postStatus = postStatus;
+	}
+
 	public int getCategoryNo() {
 		return categoryNo;
 	}
@@ -50,7 +59,8 @@ public class PostVo {
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", postTitle=" + postTitle + ", postContents=" + postContents
-				+ ", postCreatedate=" + postCreatedate + ", categoryNo=" + categoryNo + "]";
+				+ ", postCreatedate=" + postCreatedate + ", postStatus=" + postStatus + ", categoryNo=" + categoryNo
+				+ "]";
 	}
 
 }

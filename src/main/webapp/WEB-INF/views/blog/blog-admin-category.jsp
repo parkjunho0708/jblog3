@@ -30,6 +30,11 @@ $(function(){
 			type: "post",
 			dataType: "json", // JSON 형식으로 받을거다!! (MIME type)
 			data: JSON.stringify(categoryVo),
+			statusCode: {
+			    404: function() {
+			      alert("page not found");
+			    }
+			},
 			success: function(data){
 				var vo = JSON.parse(data);
 				$(".category-tbody").append("<tr>" +
@@ -56,6 +61,11 @@ $(function(){
 			url : deleteUrl,
 			type : "delete",
 			dataType : "json",
+			statusCode: {
+			    404: function() {
+			      alert("page not found");
+			    }
+			},
 			success : function(data) {
 				$(clickedRow).parent().parent().remove();
 			},

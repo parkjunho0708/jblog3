@@ -24,20 +24,12 @@ public class CategoryController {
 	
 	@ResponseBody
 	@RequestMapping("/categoryinsert")
-	public String adminCategoryInsert(
+	public CategoryVo adminCategoryInsert(
 			@RequestBody CategoryVo categoryVo,
 			Model model) {
 		categoryService.adminCategoryAdd(categoryVo); 
 		CategoryVo vo = categoryService.adminCategoryGetRecentData(categoryVo.getUserId());
-		
-		String str = "";
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            str = mapper.writeValueAsString(vo);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return str;
+        return vo;
 	}
 	
 	@ResponseBody

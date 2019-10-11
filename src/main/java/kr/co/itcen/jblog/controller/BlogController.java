@@ -50,7 +50,8 @@ public class BlogController {
 			@PathVariable(value = "pathNo1") Optional<Integer> pathNo1,
 			@PathVariable(value = "pathNo2") Optional<Integer> pathNo2, 
 			Model model) {
-
+		System.out.println("userId : " + userId);
+		System.out.println("pathNo1 : " + pathNo1);
 		Integer categoryNo = 0;
 		Integer postNo = 0;
 
@@ -59,15 +60,19 @@ public class BlogController {
 		if (pathNo1.isPresent()) { // 카테고리만
 			categoryNo = pathNo1.get();
 			map.put("postList", blogService.categoryPost(categoryNo));
+			System.out.println("pathNo1 postList : " + map);
 		} else if (pathNo2.isPresent()) { // 카테고리의 글
 			postNo = pathNo2.get();
 			categoryNo = pathNo1.get();
 			map.putAll(blogService.getCategoryPost(categoryNo, postNo));
+			System.out.println("pathNo2 postList : " + map);
 		} else {
 			map.put("postList", blogService.blogMainPostList(userId));
+			System.out.println("postList : " + map);
 		}
 
 		map.putAll(blogService.getBlogInfomation(userId));
+		System.out.println("blogService postList : " + map);
 
 		if (map.get("blogVo") == null) {
 			return "error/404";

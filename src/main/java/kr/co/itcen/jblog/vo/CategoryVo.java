@@ -5,6 +5,8 @@ public class CategoryVo {
 	private String categoryName;
 	private String categoryDesc;
 	private String categoryRegdate;
+	private String categoryStatus;
+	private int postCount;
 	private String userId;
 
 	public int getCategoryNo() {
@@ -39,6 +41,22 @@ public class CategoryVo {
 		this.categoryRegdate = categoryRegdate;
 	}
 
+	public String getCategoryStatus() {
+		return categoryStatus;
+	}
+
+	public void setCategoryStatus(String categoryStatus) {
+		this.categoryStatus = categoryStatus;
+	}
+
+	public int getPostCount() {
+		return postCount;
+	}
+
+	public void setPostCount(int postCount) {
+		this.postCount = postCount;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
@@ -50,7 +68,8 @@ public class CategoryVo {
 	@Override
 	public String toString() {
 		return "CategoryVo [categoryNo=" + categoryNo + ", categoryName=" + categoryName + ", categoryDesc="
-				+ categoryDesc + ", categoryRegdate=" + categoryRegdate + ", userId=" + userId + "]";
+				+ categoryDesc + ", categoryRegdate=" + categoryRegdate + ", categoryStatus=" + categoryStatus
+				+ ", postCount=" + postCount + ", userId=" + userId + "]";
 	}
 
 }
