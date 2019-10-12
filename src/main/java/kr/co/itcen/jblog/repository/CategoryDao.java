@@ -54,4 +54,8 @@ public class CategoryDao {
 		return list;
 	}
 
+	public void adminPostDeleteWhenCategoryDelete(int categoryNo) {
+		sqlSession.delete("category.postDeleteWhenCategoryDelete", categoryNo);
+	}
+
 }

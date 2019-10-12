@@ -37,11 +37,17 @@ public class CategoryController {
 	
 	@ResponseBody
 	@RequestMapping("/categorydelete")
-	public int adminCategoryDelete(
+	public JSONResult adminCategoryDelete(
 			@RequestParam int categoryNo,
 			@RequestParam String userId,			
 			Model model) {
+		// 카테고리에 연결된 포스트들 삭제 후, 카테고리 삭제
+		categoryService.adminPostDeleteWhenCategoryDelete(categoryNo);
+		System.out.println("categoryNo1 : " + categoryNo);
 		categoryService.adminCategoryDelete(categoryNo, userId);
-		return categoryNo;
+		System.out.println("categoryNo2 : " + categoryNo);
+		System.out.println("categoryNo3 : " + categoryNo);
+		System.out.println("categoryNo4 : " + categoryNo);
+		return JSONResult.success(categoryNo);
 	}
 }

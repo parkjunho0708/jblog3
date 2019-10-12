@@ -56,5 +56,11 @@
 			from category where category_no = #{categoryNo}
 		]]>
 	</select>
+	
+	<delete id="postDeleteWhenCategoryDelete"  parameterType="int">
+		<![CDATA[
+			delete from post where category_no = #{categoryNo}
+		]]>
+	</delete>
 
 </mapper>

@@ -43,4 +43,8 @@ public class CategoryService {
 		return categoryDao.getCategoryInformation(categoryNo);
 	}
 
+	public void adminPostDeleteWhenCategoryDelete(int categoryNo) {
+		categoryDao.adminPostDeleteWhenCategoryDelete(categoryNo);
+	}
+
 }
