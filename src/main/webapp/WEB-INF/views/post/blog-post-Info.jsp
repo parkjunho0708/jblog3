@@ -22,6 +22,7 @@
 				</ul>
       	
       			<h4 class="n-c">포스트 정보</h4>
+      			<form action="${pageContext.servletContext.contextPath}/${authUser.userId}/${postVo.postNo}/${postVo.categoryNo}/admin/post/delete" method="post">
 		      	<table id="admin-cat-add">
 		      		<tr>
 		      			<td class="t">포스트 제목</td>
@@ -32,11 +33,17 @@
 		      			<td><input type="text" id="name-category-form" name="categoryRegdate" value="${postVo.postCreatedate}" readonly="readonly"></td>
 		      		</tr>
 		      		<tr>
-		      			<td class="t">포스트 설명</td>
-		      			<td><textarea rows="10" cols="30" readonly="readonly">${postVo.postContents}></textarea></td>
-		      		</tr>      		      		
+		      			<td class="t">포스트 설명</td> 
+		      			<td><textarea rows="10" cols="30" readonly="readonly">${postVo.postContents}</textarea></td>
+		      		</tr>
+		      		<c:if test="${authUser.userId eq postVo.userId}">
+		      		<tr>
+			      			<td>&nbsp;</td>
+			      			<td class="s"><input type="submit" value="삭제하기"></td>
+			      	</tr>
+			      	</c:if>      		      		
 		      	</table>
-		      	
+		      	</form>
 			</div>
 		</div>
 		<div id="footer">

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.itcen.jblog.dto.JSONResult;
@@ -24,12 +25,14 @@ public class CategoryController {
 	
 	@ResponseBody
 	@RequestMapping("/categoryinsert")
-	public CategoryVo adminCategoryInsert(
+	public String adminCategoryInsert(
 			@RequestBody CategoryVo categoryVo,
-			Model model) {
+			Model model) throws JsonProcessingException {
 		categoryService.adminCategoryAdd(categoryVo); 
 		CategoryVo vo = categoryService.adminCategoryGetRecentData(categoryVo.getUserId());
-        return vo;
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonInString = objectMapper.writeValueAsString(vo);
+        return jsonInString;
 	}
 	
 	@ResponseBody

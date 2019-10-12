@@ -7,6 +7,7 @@ public class PostVo {
 	private String postCreatedate;
 	private String postStatus;
 	private int categoryNo;
+	private String userId; // 포스트 삭제할 때, 사용
 
 	public int getPostNo() {
 		return postNo;
@@ -56,11 +57,19 @@ public class PostVo {
 		this.categoryNo = categoryNo;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", postTitle=" + postTitle + ", postContents=" + postContents
 				+ ", postCreatedate=" + postCreatedate + ", postStatus=" + postStatus + ", categoryNo=" + categoryNo
-				+ "]";
+				+ ", userId=" + userId + "]";
 	}
 
 }

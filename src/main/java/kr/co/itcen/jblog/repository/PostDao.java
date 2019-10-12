@@ -41,4 +41,16 @@ public class PostDao {
 		return sqlSession.selectOne("post.getPostInfo", postNo);
 	}
 
+	public void increaseSpecifiedPostCount(int categoryNo) {
+		sqlSession.update("post.increasePostCount", categoryNo);
+	}
+
+	public void adminPostDelete(int postNo) {
+		sqlSession.delete("post.deleteSpecifiedPost", postNo);
+	}
+
+	public void decreasePostCountDeletedOne(int categoryNo) {
+		sqlSession.update("post.decreasePostCount", categoryNo);
+	}
+
 }

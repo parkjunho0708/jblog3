@@ -136,8 +136,8 @@ public class BlogController {
 			@ModelAttribute PostVo postVo,
 			@PathVariable("userId") String userId,
 			Model model) {
-		System.out.println("userId : " + userId);
-		postService.adminPostInsert(postVo);
+		postService.adminPostInsert(postVo); // 포스트글 등록
+		postService.increaseSpecifiedPostCount(postVo.getCategoryNo()); // 포스트에 등록한 카테고리 증가
 		return "redirect:/" + userId;
 	}
 	
@@ -147,6 +147,7 @@ public class BlogController {
 			@PathVariable("postNo") int postNo, 
 			Model model) {
 		PostVo postVo = postService.getPostInfo(postNo);
+		System.out.println("postVo : " + postVo);
 		model.addAttribute("postVo", postVo);
 		return "post/blog-post-Info";
 	}
@@ -159,5 +160,17 @@ public class BlogController {
 		CategoryVo categoryVo = categoryService.getCategoryInformation(categoryNo);
 		model.addAttribute("categoryVo", categoryVo);
 		return "category/blog-category-Info";
+	}
+	
+	// 포스트 글 삭제하기
+	@RequestMapping(value = { "/{postNo}/{categoryNo}/admin/post/delete" })
+	public String deletePost(
+			@PathVariable("userId") String userId,
+			@PathVariable("postNo") int postNo,
+			@PathVariable("categoryNo") int categoryNo,
+			Model model) {
+		postService.adminPostDelete(postNo);
+		postService.decreasePostCountDeletedOne(categoryNo);
+		return "redirect:/" + userId;
 	}
 }

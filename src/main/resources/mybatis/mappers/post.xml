@@ -5,7 +5,7 @@
 
 	<insert id="adminPostInsert" parameterType="postvo" >
 		<![CDATA[
-			insert into post values (null, #{postTitle}, #{postContents}, now(), #{categoryNo})
+			insert into post values (null, #{postTitle}, #{postContents}, now(), 'true', #{categoryNo})
 		]]>
 	</insert>
 	
@@ -13,17 +13,40 @@
 		<![CDATA[
 			select post_no as postNo, post_title as postTitle, 
 			date_format(post_createdate, '%Y-%m-%d %h:%i:%s') as postCreatedate
-			from post where category_no = (select category_no from category where user_id = #{userId} order by category_no limit 1) 
+			from post where category_no = (select category_no from category where user_id = #{userId} order by category_no limit 1) and post_status = 'true' 
 			order by postCreatedate desc limit 10
 		]]>
 	</select>
 	
 	<select id="getPostInfo" parameterType="int" resultType="postvo">
 		<![CDATA[
-			select post_no as postNo, post_title as postTitle, post_contents as postContents,
-			date_format(post_createdate, '%Y-%m-%d %h:%i:%s') as postCreatedate
-			from post where post_no = #{postNo}
+			select post.post_no as postNo, 
+			post.post_title as postTitle, 
+			post.post_contents as postContents,
+			date_format(post.post_createdate, '%Y-%m-%d %h:%i:%s') as postCreatedate, 
+			post.category_no as categoryNo, blog.user_id as userId 
+			from post, category, blog where post_no = #{postNo} 
+			and post.category_no = category.category_no 
+			and category.user_id = blog.user_id
 		]]>
 	</select>
+	
+	<update id="increasePostCount" parameterType="int">
+		<![CDATA[
+			update category set post_count = post_count + 1 where category_no = #{categoryNo}
+		]]>
+	</update>
+	
+	<delete id="deleteSpecifiedPost" parameterType="int">
+		<![CDATA[
+			delete from post where post_no = #{postNo}
+		]]>
+	</delete>
+	
+	<update id="decreasePostCount" parameterType="int">
+		<![CDATA[
+			update category set post_count = post_count - 1 where category_no = #{categoryNo}
+		]]>
+	</update>
 
 </mapper>

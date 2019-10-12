@@ -19,5 +19,17 @@ public class PostService {
 	public PostVo getPostInfo(int postNo) {
 		return postDao.getPostInfo(postNo);
 	}
+
+	public void increaseSpecifiedPostCount(int categoryNo) {
+		postDao.increaseSpecifiedPostCount(categoryNo);
+	}
+
+	public void adminPostDelete(int postNo) {
+		postDao.adminPostDelete(postNo);
+	}
+
+	public void decreasePostCountDeletedOne(int categoryNo) {
+		postDao.decreasePostCountDeletedOne(categoryNo);
+	}
 	
 }

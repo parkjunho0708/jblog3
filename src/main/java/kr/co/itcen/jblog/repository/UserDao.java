@@ -27,7 +27,6 @@ public class UserDao {
 	
 	public UserVo get(UserVo vo) {
 		UserVo result = sqlSession.selectOne("user.getByIdAndPassword", vo);
-		System.out.println("result : " + result);
 		return result;
 	}
 
