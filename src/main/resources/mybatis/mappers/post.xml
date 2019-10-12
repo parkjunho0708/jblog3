@@ -11,10 +11,14 @@
 	
 	<select id="getblogMainPostList" parameterType="string" resultType="postvo">
 		<![CDATA[
-			select post_no as postNo, post_title as postTitle, 
-			date_format(post_createdate, '%Y-%m-%d %h:%i:%s') as postCreatedate
-			from post where category_no = (select category_no from category where user_id = #{userId} order by category_no limit 1) and post_status = 'true' 
-			order by postCreatedate desc limit 10
+			select post.post_no as postNo, post.post_title as postTitle, post.post_contents as postContents,
+			date_format(post.post_createdate, '%Y-%m-%d %h:%i:%s') as postCreatedate, 
+            post.category_no as categoryNo
+			from post join category 
+            where post.category_no = category.category_no 
+            and category.user_id = #{userId}
+            and category_status = 'true' 
+            order by postCreatedate desc limit 10
 		]]>
 	</select>
 	
