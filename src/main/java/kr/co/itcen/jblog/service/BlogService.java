@@ -59,9 +59,8 @@ public class BlogService {
 		return blogDao.blogMainPostList(userId);
 	}
 
-	public Integer categoryPost(Integer categoryNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PostVo> categoryPost(Integer categoryNo) {
+		return postDao.categoryPost(categoryNo);
 	}
 	
 }

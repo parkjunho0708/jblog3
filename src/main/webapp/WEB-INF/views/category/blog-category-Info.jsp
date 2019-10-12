@@ -20,7 +20,6 @@
 					<li><a href="${pageContext.servletContext.contextPath}/${authUser.userId}/admin/category">카테고리</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/${authUser.userId}/admin/write">글작성</a></li>
 				</ul>
-      	
       			<h4 class="n-c">카테고리 정보</h4>
 		      	<table id="admin-cat-add">
 		      		<tr>
@@ -33,17 +32,12 @@
 		      		</tr>
 		      		<tr>
 		      			<td class="t">카테고리 설명</td>
-		      			<td><textarea rows="10" cols="30" readonly="readonly">${categoryVo.categoryDesc}></textarea></td>
+		      			<td><textarea rows="5" cols="70" readonly="readonly">${categoryVo.categoryDesc}</textarea></td>
 		      		</tr>      		      		
 		      	</table>
-		      	
 			</div>
 		</div>
-		<div id="footer">
-			<p>
-				<strong>Spring 이야기</strong> is powered by JBlog (c)2016
-			</p>
-		</div>
+		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
 </html>

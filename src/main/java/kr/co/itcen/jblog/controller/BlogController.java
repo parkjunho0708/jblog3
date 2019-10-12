@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.itcen.jblog.security.Auth;
+import kr.co.itcen.jblog.security.AuthUser;
 import kr.co.itcen.jblog.service.BlogService;
 import kr.co.itcen.jblog.service.CategoryService;
 import kr.co.itcen.jblog.service.FileUploadService;
@@ -24,6 +28,7 @@ import kr.co.itcen.jblog.service.PostService;
 import kr.co.itcen.jblog.vo.BlogVo;
 import kr.co.itcen.jblog.vo.CategoryVo;
 import kr.co.itcen.jblog.vo.PostVo;
+import kr.co.itcen.jblog.vo.UserVo;
 
 @Controller
 @RequestMapping("/{userId:(?!assets).*}") // asset을 아이디로 생각하지 않게 하기 위한 처리
@@ -57,22 +62,18 @@ public class BlogController {
 
 		Map<String, Object> map = new HashMap<String, Object>(); 
 			
-		if (pathNo1.isPresent()) { // 카테고리만
+		if (pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
 			map.put("postList", blogService.categoryPost(categoryNo));
-			System.out.println("pathNo1 postList : " + map);
-		} else if (pathNo2.isPresent()) { // 카테고리의 글
+		} else if (pathNo2.isPresent()) {
 			postNo = pathNo2.get();
 			categoryNo = pathNo1.get();
 			map.putAll(blogService.getCategoryPost(categoryNo, postNo));
-			System.out.println("pathNo2 postList : " + map);
 		} else {
 			map.put("postList", blogService.blogMainPostList(userId));
-			System.out.println("postList : " + map);
 		}
 
 		map.putAll(blogService.getBlogInfomation(userId));
-		System.out.println("blogService postList : " + map);
 
 		if (map.get("blogVo") == null) {
 			return "error/404";
@@ -84,22 +85,38 @@ public class BlogController {
 	}
 
 	// 블로그 관리 페이지
+	@Auth
 	@RequestMapping(value = {"/admin/basic"})
 	public String adminBasic(
+			@AuthUser UserVo authUser,
 			@PathVariable("userId") String userId,
 			Model model) {
+		if(!userId.equals(authUser.getUserId())){
+			return "redirect:/" + userId;
+		}
+		
 		BlogVo blogVo = blogService.get(userId);
+		
+		if (blogVo == null) {
+			return "error/404";
+		}
+		
 		model.addAttribute("blogVo", blogVo);
 		return "blog/blog-admin-basic";
 	}
 	
 	// 블로그 정보 수정
+	@Auth
 	@RequestMapping(value = {"/admin/basic/update"}, method = RequestMethod.POST)
 	public String adminBasicWrite(
+			@AuthUser UserVo authUser,
 			@PathVariable("userId") String userId,
-			@ModelAttribute BlogVo blogVo,
+			@ModelAttribute @Valid BlogVo blogVo,
 			@RequestParam(value="logo-file", required = false) MultipartFile multipartFile,
 			Model model) {
+		if(!userId.equals(authUser.getUserId())){
+			return "redirect:/" + userId;
+		}
 		
 		if(!multipartFile.isEmpty()) {
 			String saveFileName = fileUploadService.restore(multipartFile);
@@ -113,30 +130,60 @@ public class BlogController {
 	}
 	
 	// 카테고리 관리 페이지
+	@Auth
 	@RequestMapping(value = {"/admin/category"}, method = RequestMethod.GET)
-	public String adminCategory(@PathVariable("userId") String userId, Model model) {
+	public String adminCategory(
+			@AuthUser UserVo authUser,
+			@PathVariable("userId") String userId, 
+			Model model) {
+		if(!userId.equals(authUser.getUserId())){
+			return "redirect:/" + userId;
+		}
+		
 		List<CategoryVo> list = categoryService.adminCategorySelect(userId);
 		model.addAttribute("list", list);
 		return "blog/blog-admin-category";
 	}
 	
 	// 블로그 포스트 글 작성 페이지
+	@Auth
 	@RequestMapping(value = {"/admin/write"}, method = RequestMethod.GET)
 	public String adminWrite(
+			@AuthUser UserVo authUser,
 			@PathVariable("userId") String userId,
 			Model model) {
+		if(!userId.equals(authUser.getUserId())){
+			return "redirect:/" + userId;
+		}
+		
 		List<CategoryVo> list = categoryService.adminCategoryMatchedUserId(userId);
+		
+		if (list == null) {
+			return "error/404";
+		}
+		
 		model.addAttribute("list", list);
 		return "blog/blog-admin-write";
 	}
 	
 	// 블로그 포스트 글 작성 및 추가
+	@Auth
 	@RequestMapping(value = {"/admin/post/update"}, method = RequestMethod.POST)
 	public String adminPostWrite(
+			@AuthUser UserVo authUser,
 			@ModelAttribute PostVo postVo,
 			@PathVariable("userId") String userId,
 			Model model) {
+		if(!userId.equals(authUser.getUserId())){
+			return "redirect:/" + userId;
+		}
+		
 		postService.adminPostInsert(postVo); // 포스트글 등록
+		
+		if (postVo == null) {
+			return "error/404";
+		}
+		
 		postService.increaseSpecifiedPostCount(postVo.getCategoryNo()); // 포스트에 등록한 카테고리 증가
 		return "redirect:/" + userId;
 	}
@@ -146,6 +193,7 @@ public class BlogController {
 	public String getPostInfo(
 			@PathVariable("postNo") int postNo, 
 			Model model) {
+		
 		PostVo postVo = postService.getPostInfo(postNo);
 		System.out.println("postVo : " + postVo);
 		model.addAttribute("postVo", postVo);
@@ -163,12 +211,18 @@ public class BlogController {
 	}
 	
 	// 포스트 글 삭제하기
+	@Auth
 	@RequestMapping(value = { "/{postNo}/{categoryNo}/admin/post/delete" })
 	public String deletePost(
+			@AuthUser UserVo authUser,
 			@PathVariable("userId") String userId,
 			@PathVariable("postNo") int postNo,
 			@PathVariable("categoryNo") int categoryNo,
 			Model model) {
+		if(!userId.equals(authUser.getUserId())){
+			return "redirect:/" + userId;
+		}
+		
 		postService.adminPostDelete(postNo);
 		postService.decreasePostCountDeletedOne(categoryNo);
 		return "redirect:/" + userId;

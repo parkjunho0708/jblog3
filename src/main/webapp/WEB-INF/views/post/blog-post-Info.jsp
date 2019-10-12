@@ -20,7 +20,6 @@
 					<li><a href="${pageContext.servletContext.contextPath}/${authUser.userId}/admin/category">카테고리</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/${authUser.userId}/admin/write">글작성</a></li>
 				</ul>
-      	
       			<h4 class="n-c">포스트 정보</h4>
       			<form action="${pageContext.servletContext.contextPath}/${authUser.userId}/${postVo.postNo}/${postVo.categoryNo}/admin/post/delete" method="post">
 		      	<table id="admin-cat-add">
@@ -34,7 +33,7 @@
 		      		</tr>
 		      		<tr>
 		      			<td class="t">포스트 설명</td> 
-		      			<td><textarea rows="10" cols="30" readonly="readonly">${postVo.postContents}</textarea></td>
+		      			<td><textarea rows="5" cols="70" readonly="readonly">${postVo.postContents}</textarea></td>
 		      		</tr>
 		      		<c:if test="${authUser.userId eq postVo.userId}">
 		      		<tr>
@@ -46,11 +45,7 @@
 		      	</form>
 			</div>
 		</div>
-		<div id="footer">
-			<p>
-				<strong>Spring 이야기</strong> is powered by JBlog (c)2016
-			</p>
-		</div>
+		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
 </html>
